@@ -18,7 +18,7 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, fields
 from typing import List
 
 import torch
@@ -513,9 +513,13 @@ class VQModel(nn.Module):
 #                              VQ Model Configs                                 #
 #################################################################################
 def VQ_16(**kwargs):
+    valid_keys = {f.name for f in fields(ModelArgs)}
+    filtered_kwargs = {k: v for k, v in kwargs.items() if k in valid_keys}
     return VQModel(
         ModelArgs(
-            encoder_ch_mult=[1, 1, 2, 2, 4], decoder_ch_mult=[1, 1, 2, 2, 4], **kwargs
+            encoder_ch_mult=[1, 1, 2, 2, 4],
+            decoder_ch_mult=[1, 1, 2, 2, 4],
+            **filtered_kwargs,
         )
     )
 
