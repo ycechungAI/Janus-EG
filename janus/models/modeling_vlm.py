@@ -60,7 +60,7 @@ def model_name_to_cls(cls_name: str) -> type:
         from janus.models.vq_model import VQ_models
 
         cls = VQ_models[cls_name]
-    elif "vision_head" in cls_name:
+    elif "vision_head" in cls_name or "VisionHead" in cls_name:
         # Maintain backward compatibility with existing configs using "vision_head"
         cls = VisionHead
     else:
